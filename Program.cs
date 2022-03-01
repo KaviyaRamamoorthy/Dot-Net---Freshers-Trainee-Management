@@ -8,9 +8,10 @@ namespace FreshersManagement
         public static void Main(string[] args)
         {
             FreshersManagement freshersManagement = new FreshersManagement();
-            freshersManagement.getUserChoice();
+            freshersManagement.GetUserChoice();
         }
-        public void getUserChoice()
+
+        public void GetUserChoice()
         {
             int choice = 0;
             do
@@ -22,13 +23,13 @@ namespace FreshersManagement
                     switch (choice)
                     {
                         case 1:
-                            createTrainee();
+                            CreateTrainee();
                             break;
                         case 2:
-                            viewEmployee();
+                            ViewTrainee();
                             break;
                         case 3:
-                            searchEmployee();
+                            SearchTrainee();
                             break;
                         case 4:
                             break;
@@ -43,7 +44,8 @@ namespace FreshersManagement
                 }
             } while (4 != choice);
         }
-        public void createTrainee()
+
+        public void CreateTrainee()
         {              
             List<Trainee> trainees = new List<Trainee>();
             FileStream fileStream = new FileStream(@"C:\Users\Lenovo\Desktop\.net\FreshersTraineeManagement\trainee.txt", FileMode.Append);
@@ -54,7 +56,7 @@ namespace FreshersManagement
 
             for (int i = 0; i < number; i++)
             {
-                getDetails(trainees);
+                GetDetails(trainees);
                 count++;
             } 
            
@@ -65,7 +67,8 @@ namespace FreshersManagement
             streamWriter.Close();
             fileStream.Close();
         }
-        private void getDetails(List<Trainee> trainees)
+
+        private void GetDetails(List<Trainee> trainees)
         {
             int id;
             string name;
@@ -73,18 +76,19 @@ namespace FreshersManagement
             string address;
             DateOnly dateOfBirth;
 
-            id = (int)getId();
+            id = (int)GetId();
             Console.Write("Enter Name: ");
             name = Console.ReadLine();
-            mobileNumber = getMobileNumber();
+            mobileNumber = GetMobileNumber();
             Console.Write("Enter Addess: ");
             address = Console.ReadLine();
-            dateOfBirth = getDateOfBirth();
+            dateOfBirth = GetDateOfBirth();
 
             Trainee trainee = new Trainee(id, name, mobileNumber, address, dateOfBirth);
             trainees.Add(trainee);
         }
-        private long getId()
+
+        private long GetId()
         {
             bool isValid = false;
             int id = 1;
@@ -104,7 +108,8 @@ namespace FreshersManagement
             }
             return id;
         }
-        private long getMobileNumber()
+
+        private long GetMobileNumber()
         {
             bool isValid = false;
             long mobileNumber = 0;
@@ -126,7 +131,7 @@ namespace FreshersManagement
             return mobileNumber;
         }
 
-        private DateOnly getDateOfBirth()
+        private DateOnly GetDateOfBirth()
         {
             bool isValid = false;
             DateOnly dateOfBirth;
@@ -147,7 +152,8 @@ namespace FreshersManagement
             }
             return dateOfBirth;
         }
-        private int calculateAge(DateOnly dateOfBirth)
+
+        private int CalculateAge(DateOnly dateOfBirth)
         {
             int age = DateTime.Now.Year - dateOfBirth.Year;
 
@@ -156,7 +162,8 @@ namespace FreshersManagement
 
             return age;
         }
-        public void viewEmployee()
+
+        public void ViewTrainee()
         {
             FileStream fileStream = new FileStream(@"C:\Users\Lenovo\Desktop\.net\FreshersTraineeManagement\trainee.txt", FileMode.Open);
             StreamReader streamReader = new StreamReader(fileStream);
@@ -170,13 +177,14 @@ namespace FreshersManagement
                 string mobileNumber = values[2];
                 string address = values[3];
                 DateOnly dateOfBirth = DateOnly.Parse(values[4]);
-                int age = calculateAge(dateOfBirth);
+                int age = CalculateAge(dateOfBirth);
                 Console.WriteLine("\nId: {0}\nName: {1}\nMobile number: {2}\nAddress: {3}\nDate of birth: {4}\nAge: {5}\n",
                     id, name, mobileNumber, address, dateOfBirth, age);
                 data = streamReader.ReadLine();
             }
         }
-        public void searchEmployee()
+
+        public void SearchTrainee()
         {
             FileStream fileStream = new FileStream(@"C:\Users\Lenovo\Desktop\.net\FreshersTraineeManagement\trainee.txt", FileMode.Open);
             StreamReader streamReader = new StreamReader(fileStream);
