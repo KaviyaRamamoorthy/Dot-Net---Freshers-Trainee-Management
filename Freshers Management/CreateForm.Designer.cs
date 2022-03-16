@@ -1,4 +1,4 @@
-﻿namespace Freshers_Management
+﻿namespace FreshersManagement.Windows
 {
     partial class CreateForm
     {
@@ -132,7 +132,7 @@
             this.Create.Name = "Create";
             this.Create.Size = new System.Drawing.Size(149, 45);
             this.Create.TabIndex = 10;
-            this.Create.Text = "Add";
+            this.Create.Text = "Save";
             this.Create.UseVisualStyleBackColor = false;
             this.Create.Click += new System.EventHandler(this.Create_Click_1);
             // 
@@ -143,6 +143,7 @@
             this.dobText.Name = "dobText";
             this.dobText.Size = new System.Drawing.Size(239, 32);
             this.dobText.TabIndex = 13;
+            this.dobText.Value = new System.DateTime(1999, 1, 1, 11, 56, 0, 0);
             this.dobText.Validating += new System.ComponentModel.CancelEventHandler(this.DobText_Validating);
             // 
             // label6

@@ -1,22 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using FreshersManagement.Data;
+using FreshersManagement.Model;
 
-namespace Freshers_Management
+namespace FreshersManagement.Windows
 {
     public partial class CreateForm : Form
     {
-        BindingList<Trainee> trainees = new BindingList<Trainee>();
-        TraineeList traineeList = new TraineeList();
-        ViewForm viewForm = new ViewForm();
-
-        string name;
-        long mobileNumber;
-        string qualification;
-        string address;
-        DateTime dob;
+        IDataAccess dataAcces = new DataAccess();
 
         public CreateForm()
         {
@@ -25,19 +18,28 @@ namespace Freshers_Management
 
         private void Create_Click_1(object sender, EventArgs e)
         {
-            name = nameText.Text;
-            mobileNumber = Convert.ToInt64(mobileText.Text);
-            qualification = qualiText.Text;
-            dob = DateTime.Parse(dobText.Text);
-            address = addressText.Text;
-            Trainee trainee = new Trainee(++traineeList.Id, name, mobileNumber, qualification, dob, address);
+            string name = nameText.Text;
+            long mobileNumber = Convert.ToInt64(mobileText.Text);
+            string qualification = qualiText.Text;
+            DateTime dob = DateTime.Parse(dobText.Text);
+            string address = addressText.Text;
+            Trainee trainee = new Trainee(name, mobileNumber, qualification, dob.ToString("yyyy-MM-dd"), address);
+          
             if (idText.Text == "")
             {
-                traineeList.Save(trainee);
-            }
-            else
+                if (0 == dataAcces.InsertTrainee(trainee))
+                {
+                    MessageBox.Show("Mobile Number Already Exists");
+                }
+                else
+                {
+                    MessageBox.Show("Trainee Details Saved successfully!");
+                }
+            } else
             {
-                traineeList.Update(trainee);
+                trainee.Id = Convert.ToInt32(idText.Text);
+                dataAcces.UpdateTrainee(trainee);
+                MessageBox.Show("Trainee Details Updated successfully!");
             }
             Empty();
         }
@@ -58,7 +60,7 @@ namespace Freshers_Management
             nameText.Text = name;
             mobileText.Text = mobileNumber.ToString();
             qualiText.Text = qualification;
-            dobText.Text = dob.ToString();
+            dobText.Text = dob.ToShortDateString();
             addressText.Text = address;
         }
 
@@ -70,7 +72,7 @@ namespace Freshers_Management
                 nameText.Focus();
                 errorProvider1.SetError(nameText, "Name should not be left blank!");
             }
-            else if (!Regex.IsMatch(nameText.Text, @"^[a-zA-Z]+$"))
+            else if (!Regex.IsMatch(nameText.Text, @"^([a-zA-Z ]+)")) 
             {
                 e.Cancel = true;
                 nameText.Focus();

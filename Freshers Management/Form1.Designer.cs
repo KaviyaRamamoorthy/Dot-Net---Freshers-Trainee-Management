@@ -1,4 +1,4 @@
-﻿namespace Freshers_Management
+﻿namespace FreshersManagement.Windows
 {
     partial class Form1
     {
@@ -37,9 +37,9 @@
             this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            this.button1.Location = new System.Drawing.Point(150, 2);
+            this.button1.Location = new System.Drawing.Point(272, 129);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(240, 39);
+            this.button1.Size = new System.Drawing.Size(240, 79);
             this.button1.TabIndex = 0;
             this.button1.Text = "Add New Trainee";
             this.button1.UseVisualStyleBackColor = false;
@@ -50,9 +50,9 @@
             this.button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            this.button2.Location = new System.Drawing.Point(542, 2);
+            this.button2.Location = new System.Drawing.Point(270, 280);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(242, 39);
+            this.button2.Size = new System.Drawing.Size(242, 80);
             this.button2.TabIndex = 3;
             this.button2.Text = "List Trainees";
             this.button2.UseVisualStyleBackColor = false;

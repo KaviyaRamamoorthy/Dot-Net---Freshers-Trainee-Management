@@ -1,14 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Freshers_Management
+namespace FreshersManagement.Windows
 {
     public partial class Form1 : Form
     {
@@ -18,11 +11,8 @@ namespace Freshers_Management
         }
 
         private void button1_Click(object sender, EventArgs e)
-        {
-            TraineeList traineeList = new TraineeList();
-           
+        { 
             CreateForm createForm = new CreateForm();
-            traineeList.Id++;
             createForm.ShowDialog();
         }
 

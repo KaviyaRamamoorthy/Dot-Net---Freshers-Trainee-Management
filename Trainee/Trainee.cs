@@ -1,13 +1,10 @@
-﻿using System;
-
-namespace Freshers_Management
+﻿
+namespace FreshersManagement.Model
 {
-    
     public class Trainee
     {
-        public Trainee(int id, string name, long mobileNumber, string qualification, DateTime dob, string address)
+        public Trainee(string name, long mobileNumber, string qualification, string dob, string address)
         {
-            Id = id;
             Name = name;
             MobileNumber = mobileNumber;
             Qualification = qualification;
@@ -16,10 +13,16 @@ namespace Freshers_Management
         }
 
         public int Id { get; set; }
+
         public string Name { get; set; }
+
         public long MobileNumber { get; set; }
+
         public string Qualification { get; set; }
-        public DateTime Dob { get; set; }
+
+        public string Dob { get; set; }
+
         public string Address { get; set; }
     }
 }
+

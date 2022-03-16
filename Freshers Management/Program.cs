@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Data.SqlClient;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Freshers_Management
+namespace FreshersManagement.Windows
 {
     internal static class Program
     {
@@ -18,5 +19,7 @@ namespace Freshers_Management
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
         }
+
     }
 }
+
