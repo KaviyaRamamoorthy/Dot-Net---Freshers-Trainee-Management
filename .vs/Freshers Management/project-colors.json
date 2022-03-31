@@ -25,7 +25,22 @@
       "ProjectGuid": "5a984bae-3c9c-4a1d-b566-91932593b79e",
       "DisplayName": "FreshersManagement.Model",
       "ColorIndex": 3
+    },
+    "b34010f3-1c7d-4b4b-8410-4c06f2fe6948": {
+      "ProjectGuid": "b34010f3-1c7d-4b4b-8410-4c06f2fe6948",
+      "DisplayName": "FreshersManagement.MVC",
+      "ColorIndex": 4
+    },
+    "dba1f542-f1dd-4a9e-bea8-3fac10444c0f": {
+      "ProjectGuid": "dba1f542-f1dd-4a9e-bea8-3fac10444c0f",
+      "DisplayName": "FreshersManagement.Service",
+      "ColorIndex": 5
+    },
+    "65edf30e-eb80-4573-bc2b-35ec2c6cbab3": {
+      "ProjectGuid": "65edf30e-eb80-4573-bc2b-35ec2c6cbab3",
+      "DisplayName": "FreshersManagement.Service",
+      "ColorIndex": 6
     }
   },
-  "NextColorIndex": 4
+  "NextColorIndex": 7
 }

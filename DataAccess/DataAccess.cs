@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 using FreshersManagement.Model;
 
 namespace FreshersManagement.Data
@@ -10,7 +12,7 @@ namespace FreshersManagement.Data
         SqlConnection sqlConnection = null;
         SqlCommand sqlCommand = new SqlCommand();
         DatabaseManager databaseManager = new DatabaseManager();
-
+       
         public int InsertTrainee(Trainee trainee)
         {
             string commandText = $"spSaveTrainee {trainee.Id}, '{trainee.Name}', " +
@@ -22,7 +24,7 @@ namespace FreshersManagement.Data
                 sqlConnection = databaseManager.GetConnection();
                 sqlCommand = databaseManager.GetCommand(commandText, sqlConnection);
                 affectedRows = sqlCommand.ExecuteNonQuery();
-            }
+            } 
             catch (SqlException exception)
             {
                 Console.WriteLine("Error: " + exception.Message);
@@ -34,16 +36,28 @@ namespace FreshersManagement.Data
             return affectedRows;
         }
 
-        public DataTable FetchTrainee()
-        {
-            DataTable dataTable = new DataTable();
-            SqlDataAdapter sqlDataAdapter = null;
+        public IEnumerable<Trainee> FetchTrainee()
+        { 
             string commandText = "spSelectTrainees";
+            List<Trainee> trainees = new List<Trainee>();
             try
             {
                 sqlConnection = databaseManager.GetConnection();
-                sqlDataAdapter = databaseManager.GetValues(commandText, sqlConnection);
-                sqlDataAdapter.Fill(dataTable);
+                sqlCommand = databaseManager.GetCommand(commandText, sqlConnection);
+                SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+               
+                while (sqlDataReader.Read())
+                {
+                    Trainee trainee = new Trainee();
+                    trainee.Id = int.Parse(sqlDataReader["Id"].ToString());
+                    trainee.Name = sqlDataReader["Name"].ToString();
+                    trainee.MobileNumber = long.Parse(sqlDataReader["MobileNumber"].ToString());
+                    trainee.Qualification = sqlDataReader["Qualification"].ToString();
+                    DateTime dateTime = DateTime.Parse(sqlDataReader["Dob"].ToString());
+                    trainee.Dob = dateTime.ToString("yyyy/MM/dd");
+                    trainee.Address = sqlDataReader["Address"].ToString();
+                    trainees.Add(trainee);
+                }
             }
             catch (SqlException exception)
             {
@@ -53,9 +67,9 @@ namespace FreshersManagement.Data
             {
                 sqlConnection.Close();
             }
-            return dataTable;
+            return trainees;
         }
-
+     
         public void UpdateTrainee(Trainee trainee)
         {
             string commandText = $"spSaveTrainee {trainee.Id}, '{trainee.Name}', " +

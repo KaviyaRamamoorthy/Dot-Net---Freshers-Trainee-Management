@@ -1,4 +1,5 @@
 ﻿using FreshersManagement.Model;
+using System.Collections.Generic;
 using System.Data;
 
 namespace FreshersManagement.Data
@@ -7,7 +8,7 @@ namespace FreshersManagement.Data
     {   
         int InsertTrainee(Trainee trainee);
 
-        DataTable FetchTrainee();
+        IEnumerable<Trainee> FetchTrainee();
 
         void UpdateTrainee(Trainee trainee);
 

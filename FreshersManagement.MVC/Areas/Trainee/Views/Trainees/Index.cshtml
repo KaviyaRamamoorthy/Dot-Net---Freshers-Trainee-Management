@@ -1,0 +1,44 @@
+﻿@model IEnumerable<FreshersManagement.Model.Trainee>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h1 style="text-align: center; ">Trainee Management</h1>
+<br />
+<h2 style="text-align: center; ">
+    <a class="btn btn-link btn-lg btnAdd" data-toggle="modal" data-target="#myModal"> Create New Fresher</a>
+</h2>
+<h3 style="text-align: center; ">
+    @Html.ActionLink(" Display Freshers", "DisplayTrainee", null, new { @class = "btn btn-link btn-lg" })
+</h3>
+
+<div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div id="teste"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $(".btnAdd").click(function () {
+
+                var id = $(this).data("value");
+                $("#teste").load("/Trainee/Trainees/Create/" + id, function () {
+                    $('#myModal').modal("show");
+                });
+            });
+        });
+    </script>
+
+}
+
+

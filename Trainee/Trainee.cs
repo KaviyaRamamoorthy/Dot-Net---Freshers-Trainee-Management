@@ -3,6 +3,11 @@ namespace FreshersManagement.Model
 {
     public class Trainee
     {
+        public Trainee()
+        {
+
+        }
+
         public Trainee(string name, long mobileNumber, string qualification, string dob, string address)
         {
             Name = name;
