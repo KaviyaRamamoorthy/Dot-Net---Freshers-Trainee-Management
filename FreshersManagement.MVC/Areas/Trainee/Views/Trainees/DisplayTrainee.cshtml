@@ -57,7 +57,7 @@
                 @Html.DisplayFor(modelItem => item.Address)
             </td>
             <td>
-                <button class="btn btn-info btnEdit" data-toggle="modal" data-value="@item.Id" data-target="#myModal"><i class="fa fa-pencil"></i> Edit</button>
+                <button class="btn btn-info"  onclick="EditTrainee(@item.Id)"><i class="fa fa-pencil"></i> Edit</button>
             </td>
             <td>
                 @using (Html.BeginForm("Delete", "Trainees", new { id = item.Id }))
@@ -77,25 +77,8 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-body">
-                <div id="teste"></div>
+                <div id="btnUpdate"></div>
             </div>
         </div>
     </div>
 </div>
-
-
-@section scripts{
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $(".btnEdit").click(function () {
-                var id = $(this).data("value");
-                $("#teste").load("/Trainee/Trainees/Edit/" + id, function () {
-                    $('#myModal').modal("show");
-                });
-            });
-        });
-    </script>
-
-}
-

@@ -10,7 +10,6 @@ namespace FreshersManagement.MVC.Areas.Trainee.Controllers
 {
     public class TraineesController : Controller
     {
-        // GET: Trainee/Trainee
         ITraineeService traineeService = new TraineeService();
 
         public ActionResult Index()
@@ -23,19 +22,19 @@ namespace FreshersManagement.MVC.Areas.Trainee.Controllers
             return View(traineeService.Display().ToList());
         }
 
-        [HttpGet]
+        [HttpGet]     
         public ActionResult Create()
         {
             ViewBag.Name = "Create";
             return PartialView("Edit");
         }
 
-        [HttpPost]
+        [HttpPost]   
         public ActionResult Create(Model.Trainee trainee)
         {
             traineeService.CreateTrainee(trainee);
             return RedirectToAction("DisplayTrainee");
-        }
+        }   
 
         [HttpGet]
         public ActionResult Edit(int id)
@@ -50,10 +49,11 @@ namespace FreshersManagement.MVC.Areas.Trainee.Controllers
                 }
                
             }
-            return PartialView(trainee);
+            return PartialView("Edit", trainee);
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(Model.Trainee trainee)
         {
             traineeService.UpdateTrainee(trainee);

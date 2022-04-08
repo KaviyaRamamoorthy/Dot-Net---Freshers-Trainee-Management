@@ -4,12 +4,12 @@
     ViewBag.Title = "Index";
 }
 
-<h1 style="text-align: center; ">Trainee Management</h1>
+<h1>Trainee Management</h1>
 <br />
-<h2 style="text-align: center; ">
+<h2>
     <a class="btn btn-link btn-lg btnAdd" data-toggle="modal" data-target="#myModal"> Create New Fresher</a>
 </h2>
-<h3 style="text-align: center; ">
+<h3>
     @Html.ActionLink(" Display Freshers", "DisplayTrainee", null, new { @class = "btn btn-link btn-lg" })
 </h3>
 
@@ -23,22 +23,4 @@
     </div>
 </div>
 
-
-@section scripts{
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-
-            $(".btnAdd").click(function () {
-
-                var id = $(this).data("value");
-                $("#teste").load("/Trainee/Trainees/Create/" + id, function () {
-                    $('#myModal').modal("show");
-                });
-            });
-        });
-    </script>
-
-}
-
-
+<script src="~/Scripts/Create.js"></script>
