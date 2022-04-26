@@ -69,17 +69,27 @@ namespace FreshersManagement.Data
             }
             return trainees;
         }
-     
-        public void UpdateTrainee(Trainee trainee)
+
+        public Trainee FetchTraineeById(int id)
         {
-            string commandText = $"spSaveTrainee {trainee.Id}, '{trainee.Name}', " +
-                    $"{trainee.MobileNumber}, '{trainee.Qualification}', '{trainee.Dob}', " +
-                    $"'{trainee.Address}'";
+            string commandText = $"spSelectTraineeByIds {id}";
+            Trainee trainee = new Trainee();
             try
             {
                 sqlConnection = databaseManager.GetConnection();
                 sqlCommand = databaseManager.GetCommand(commandText, sqlConnection);
-                sqlCommand.ExecuteNonQuery();
+                SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+
+                while (sqlDataReader.Read())
+                {
+                    trainee.Id = id;
+                    trainee.Name = sqlDataReader["Name"].ToString();
+                    trainee.MobileNumber = long.Parse(sqlDataReader["MobileNumber"].ToString());
+                    trainee.Qualification = sqlDataReader["Qualification"].ToString();
+                    DateTime dateTime = DateTime.Parse(sqlDataReader["Dob"].ToString());
+                    trainee.Dob = dateTime.ToString("yyyy/MM/dd");
+                    trainee.Address = sqlDataReader["Address"].ToString();
+                }
             }
             catch (SqlException exception)
             {
@@ -89,6 +99,30 @@ namespace FreshersManagement.Data
             {
                 sqlConnection.Close();
             }
+            return trainee;
+        }
+
+        public int UpdateTrainee(Trainee trainee)
+        {
+            string commandText = $"spSaveTrainee {trainee.Id}, '{trainee.Name}', " +
+                    $"{trainee.MobileNumber}, '{trainee.Qualification}', '{trainee.Dob}', " +
+                    $"'{trainee.Address}'";
+            int affectedRows = 0;
+            try
+            {
+                sqlConnection = databaseManager.GetConnection();
+                sqlCommand = databaseManager.GetCommand(commandText, sqlConnection);
+                affectedRows = sqlCommand.ExecuteNonQuery();
+            }
+            catch (SqlException exception)
+            {
+                Console.WriteLine("Error: " + exception.Message);
+            }
+            finally
+            {
+                sqlConnection.Close();
+            }
+            return affectedRows;
         }
 
         public void DeleteTrainee(int id)

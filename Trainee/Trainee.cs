@@ -10,7 +10,7 @@ namespace FreshersManagement.Model
 
         }
 
-        public Trainee(string name, long mobileNumber, string qualification, string dob, string address)
+        public Trainee(int id, string name, long mobileNumber, string qualification, string dob, string address)
         {
             Name = name;
             MobileNumber = mobileNumber;

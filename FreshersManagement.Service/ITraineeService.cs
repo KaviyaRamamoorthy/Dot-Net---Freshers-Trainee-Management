@@ -7,10 +7,10 @@ namespace FreshersManagement.Service
     {
         int CreateTrainee(Trainee trainee);
 
-        List<Trainee> Display();
-
-        void UpdateTrainee(Trainee trainee);
-
         void DeleteTrainee(int id);
+
+        List<Trainee> Display();
+  
+        int UpdateTrainee(Trainee trainee);
     }
 }

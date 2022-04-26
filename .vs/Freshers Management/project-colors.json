@@ -40,7 +40,17 @@
       "ProjectGuid": "65edf30e-eb80-4573-bc2b-35ec2c6cbab3",
       "DisplayName": "FreshersManagement.Service",
       "ColorIndex": 6
+    },
+    "0bf3a686-177b-4f12-81f4-4b19914f3392": {
+      "ProjectGuid": "0bf3a686-177b-4f12-81f4-4b19914f3392",
+      "DisplayName": "FreshersManagement.WebApi",
+      "ColorIndex": 7
+    },
+    "db988b0b-4f3b-4cf9-b314-0e270e109418": {
+      "ProjectGuid": "db988b0b-4f3b-4cf9-b314-0e270e109418",
+      "DisplayName": "FreshersManagement.WebApi",
+      "ColorIndex": 8
     }
   },
-  "NextColorIndex": 7
+  "NextColorIndex": 9
 }

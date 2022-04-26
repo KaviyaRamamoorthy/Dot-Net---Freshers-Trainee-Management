@@ -24,9 +24,14 @@ namespace FreshersManagement.Service
             return trainee;
         }
 
-        public void UpdateTrainee(Trainee trainee)
+        //public Trainee FetchTraineeById(int id)
+        //{
+        //    return dataAccess.FetchTraineeById(id);
+        //}
+
+        public int UpdateTrainee(Trainee trainee)
         {
-            dataAccess.UpdateTrainee(trainee);
+            return dataAccess.UpdateTrainee(trainee);
         }
 
         public void DeleteTrainee(int id)

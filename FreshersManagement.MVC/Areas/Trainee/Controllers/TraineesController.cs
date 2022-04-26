@@ -1,70 +1,193 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Web;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
 using System.Web.Mvc;
-using FreshersManagement.Service;
+using Newtonsoft.Json;
+using System.Configuration;
 
 namespace FreshersManagement.MVC.Areas.Trainee.Controllers
 {
     public class TraineesController : Controller
     {
-        ITraineeService traineeService = new TraineeService();
+        Uri baseAddress = new Uri(ConfigurationManager.AppSettings["Baseurl"]);
+        HttpClient client;
+
+        public TraineesController()
+        {
+            client = new HttpClient();
+            client.BaseAddress = baseAddress;
+        }
 
         public ActionResult Index()
         {
             return View();
         }
 
-        public ActionResult DisplayTrainee()
+        public async Task<ActionResult> DisplayTrainee()
         {
-            return View(traineeService.Display().ToList());
+            List<Model.Trainee> trainees = new List<Model.Trainee>();
+            try
+            {
+                client.DefaultRequestHeaders.Clear();
+                HttpResponseMessage response = await client.GetAsync(client.BaseAddress + "/values");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    trainees = JsonConvert.DeserializeObject<List<Model.Trainee>>(data);
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Server error try after some time.");
+                }
+            }
+            catch (Exception)
+            {
+                return View("Error");
+            }
+            return View(trainees);
         }
 
-        [HttpGet]     
+        public async Task<ActionResult> DisplayTraineeById(int id)
+        {
+            Model.Trainee trainees = new Model.Trainee();
+            try
+            {
+                client.DefaultRequestHeaders.Clear();
+                HttpResponseMessage response = await client.GetAsync(client.BaseAddress + "/values/" + id);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    trainees = JsonConvert.DeserializeObject<Model.Trainee>(data);
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Server error try after some time.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return View("Error");
+            }
+            return View(trainees);
+        }
+
+        [HttpGet]
         public ActionResult Create()
         {
             ViewBag.Name = "Create";
             return PartialView("Edit");
         }
 
-        [HttpPost]   
-        public ActionResult Create(Model.Trainee trainee)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Create(Model.Trainee trainee)
         {
-            traineeService.CreateTrainee(trainee);
-            return RedirectToAction("DisplayTrainee");
-        }   
-
-        [HttpGet]
-        public ActionResult Edit(int id)
-        {
-            ViewBag.Name = "Edit";
-            List<Model.Trainee> trainees = traineeService.Display().ToList();
-            Model.Trainee trainee = null;
-            foreach (var traine in trainees)
+            try
             {
-                if (traine.Id == id) {
-                    trainee = traine;
+                string data = JsonConvert.SerializeObject(trainee);
+                StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await client.PostAsync(client.BaseAddress + "/values", content);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("DisplayTrainee");
                 }
-               
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Server error try after some time.");
+                }
             }
-            return PartialView("Edit", trainee);
+            catch (Exception ex)
+            {
+                return View("Error");
+            }
+            return View();
+        }
+
+        public async Task<ActionResult> Edit(int id)
+        {
+            List<Model.Trainee> trainees = new List<Model.Trainee>();
+            Model.Trainee model = new Model.Trainee();
+            try
+            {
+                client.DefaultRequestHeaders.Clear();
+                HttpResponseMessage response = await client.GetAsync(client.BaseAddress + "/values");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    trainees = JsonConvert.DeserializeObject<List<Model.Trainee>>(data);
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Server error try after some time.");
+                }
+                foreach (Model.Trainee trainee in trainees)
+                {
+                    if (trainee.Id == id)
+                    {
+                        model = trainee;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return View("Error");
+            }
+            return View("Edit", model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Model.Trainee trainee)
+        public async Task<ActionResult> Edit(Model.Trainee trainee)
         {
-            traineeService.UpdateTrainee(trainee);
-            return RedirectToAction("DisplayTrainee");
+            try
+            {
+                string data = JsonConvert.SerializeObject(trainee);
+                StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await client.PutAsync(client.BaseAddress + "/values/" + trainee.Id, content);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("DisplayTrainee");
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Server error try after some time.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return View("Error");
+            }
+            return View("Edit", trainee);
         }
 
         [HttpPost]
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            traineeService.DeleteTrainee(id);
-            return RedirectToAction("DisplayTrainee");
+            try
+            {
+                HttpResponseMessage response = await client.DeleteAsync(client.BaseAddress + "/values/" + id);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("DisplayTrainee");
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Server error try after some time.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return View("Error");
+            }
+            return RedirectToAction("Index");
         }
     }
 }

@@ -10,7 +10,9 @@ namespace FreshersManagement.Data
 
         IEnumerable<Trainee> FetchTrainee();
 
-        void UpdateTrainee(Trainee trainee);
+        Trainee FetchTraineeById(int id);
+
+        int UpdateTrainee(Trainee trainee);
 
         void DeleteTrainee(int id);
     }
